@@ -1,0 +1,88 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Conecta Solidária</title>
+    <link rel="icon" type="image/png" href="{% static 'img/logo_ciclo.png' %}">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous">
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- CSS personalizado -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="{% static 'js/script.js' %}" defer></script>
+</head>
+<body>
+
+<!-- Barra de Navegação -->
+<nav class="navbar navbar-expand-lg navbar-light bg-navbar px-3">
+    <div class="container-fluid">
+
+        <!-- Logo -->
+        <a class="navbar-brand d-flex align-items-center" href="{% url 'index' %}">
+            <img src="{% static 'img/logo_ciclo.png' %}" alt="Logo Ciclo do Bem" width="50" height="40" class="d-inline-block align-text-top me-2">
+            <span class="logo-text mb-0">Ciclo do Bem</span>
+        </a>
+
+        <!-- Botões no canto direito -->
+        <div class="d-flex align-items-center gap-3">
+
+            <!-- Dropdown Cadastrar -->
+            <div class="dropdown">
+                <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownCadastrar" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                    Cadastrar
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownCadastrar">
+                    <li><a class="dropdown-item" href="{% url 'cadastrar_estabelecimento' %}">Estabelecimento</a></li>
+                    <li><a class="dropdown-item" href="{% url 'cadastrar_instituicao' %}">Instituição</a></li>
+                </ul>
+            </div>
+
+            <!-- Botão Login / Logout -->
+            {% if user.is_authenticated %}
+                <form method="POST" action="{% url 'logout' %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-danger">Sair</button>
+                </form>
+            {% else %}
+                <div class="dropdown">
+                    <button class="btn btn-outline-success dropdown-toggle" type="button" id="dropdownLogin" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                        Login
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownLogin">
+                        <li><a class="dropdown-item" href="{% url 'login_estabelecimento' %}">Estabelecimento</a></li>
+                        <li><a class="dropdown-item" href="{% url 'login_instituicao' %}">Instituição</a></li>
+                    </ul>
+                </div>
+            {% endif %}
+
+        </div>
+    </div>
+</nav>
+
+<!-- Conteúdo principal -->
+<main class="container my-5">
+    {% block content %}
+    {% endblock %}
+</main>
+
+<!-- Rodapé -->
+<footer class="text-center mt-5 py-3 bg-light border-top">
+    <p class="mb-0">&copy; 2025 Ciclo do Bem - Todos os direitos reservados</p>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>
