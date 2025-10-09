@@ -17,7 +17,7 @@ Including another URLconf
 # gerenciador/urls.py
 from django.contrib import admin
 from django.urls import path, include
-from .views import index
+from .views import index,saiba_mais
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,4 +25,5 @@ urlpatterns = [
     path('instituicoes/', include(('instituicoes.urls', 'instituicoes'), namespace='instituicoes')),
     path('ofertas/', include(('ofertas.urls', 'ofertas'), namespace='ofertas')),
     path('', index, name='index'),
+    path('saiba_mais/',saiba_mais, name='saiba_mais'),
 ]

@@ -1,11 +1,7 @@
 from django.urls import path
-
-# Você pode importar views depois
-# from . import views
+from django.views.generic import TemplateView
 
 urlpatterns = [
-    # path('', views.index, name='index'),  # ← descomentar quando a view existir
-    # path('detalhe/<int:id>/', views.detalhe, name='detalhe'),
-    
-    # Por enquanto, deixamos vazio ou comentado
+    path('cadastrar_instituicao/', TemplateView.as_view(template_name='cadastrar_instituicao.html'), name='cadastrar_instituicao'),
+    path('login_instituicao/', TemplateView.as_view(template_name='login_instituicao.html'), name='login_instituicao'),
 ]

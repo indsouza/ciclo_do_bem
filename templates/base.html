@@ -3,7 +3,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Conecta Solidária</title>
+    <title>Ciclo do Bem</title>
     <link rel="icon" type="image/png" href="{% static 'img/logo_ciclo.png' %}">
 
     <!-- Bootstrap CSS -->
@@ -40,8 +40,8 @@
                     Cadastrar
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownCadastrar">
-                    <li><a class="dropdown-item" href="{% url 'cadastrar_estabelecimento' %}">Estabelecimento</a></li>
-                    <li><a class="dropdown-item" href="{% url 'cadastrar_instituicao' %}">Instituição</a></li>
+                    <li><a class="dropdown-item" href="{% url 'estabelecimentos:cadastrar_estabelecimento'%}">Estabelecimento</a></li>
+                    <li><a class="dropdown-item" href="{% url 'instituicoes:cadastrar_instituicao'%}">Instituição</a></li>
                 </ul>
             </div>
 
@@ -58,8 +58,8 @@
                         Login
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownLogin">
-                        <li><a class="dropdown-item" href="{% url 'login_estabelecimento' %}">Estabelecimento</a></li>
-                        <li><a class="dropdown-item" href="{% url 'login_instituicao' %}">Instituição</a></li>
+                        <li><a class="dropdown-item" href="{% url 'estabelecimentos:login_estabelecimento'%}">Estabelecimento</a></li>
+                        <li><a class="dropdown-item" href="{% url 'instituicoes:login_instituicao'%}">Instituição</a></li>
                     </ul>
                 </div>
             {% endif %}
