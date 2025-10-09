@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'estabelecimentos',
+    'estabelecimentos',  # ✅ seu app
     'instituicoes',
     'ofertas',
 ]
@@ -117,13 +117,19 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-# URL usada para acessar arquivos estáticos no navegador
 STATIC_URL = '/static/'
 
-# Diretório onde você vai colocar seus arquivos estáticos (CSS, JS, imagens, etc.)
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
+
+# ✅ Adicionado: configurações de mídia (upload de imagens, como logo da empresa)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+# ✅ Adicionado: informa ao Django que o modelo de usuário vem do app estabelecimentos
+AUTH_USER_MODEL = 'estabelecimentos.Estabelecimento'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 

@@ -1,3 +1,65 @@
 from django.db import models
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
-# Create your models here.
+# Gerenciador personalizado para o usuário
+class EstabelecimentoManager(BaseUserManager):
+    def create_user(self, email, senha=None, **extra_fields):
+        if not email:
+            raise ValueError("O campo email é obrigatório")
+        email = self.normalize_email(email)
+        user = self.model(email=email, **extra_fields)
+        user.set_password(senha)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, email, senha=None, **extra_fields):
+        extra_fields.setdefault('is_admin', True)
+        return self.create_user(email, senha, **extra_fields)
+
+
+# Modelo principal do estabelecimento
+class Estabelecimento(AbstractBaseUser):
+    email = models.EmailField(unique=True)
+    razao_social = models.CharField(max_length=150)
+    cnpj = models.CharField(max_length=18)
+    nome_fantasia = models.CharField(max_length=150)
+    inscricao_estadual = models.CharField(max_length=50, blank=True, null=True)
+    endereco = models.CharField(max_length=150)
+    numero = models.CharField(max_length=10)
+    complemento = models.CharField(max_length=100, blank=True, null=True)
+    cidade = models.CharField(max_length=100)
+    bairro = models.CharField(max_length=100)
+    cep = models.CharField(max_length=9)
+    telefone = models.CharField(max_length=20)
+    horario_inicio = models.TimeField()
+    horario_fim = models.TimeField()
+    logo = models.ImageField(upload_to='logos/', blank=True, null=True)
+
+    nome_proprietario = models.CharField(max_length=150)
+    cargo_funcao = models.CharField(max_length=100)
+    rg = models.CharField(max_length=20)
+    cpf = models.CharField(max_length=14)
+    telefone_proprietario = models.CharField(max_length=20)
+
+    responsavel_tecnico = models.CharField(max_length=150)
+    formacao_academica = models.CharField(max_length=150)
+    conselho_classe = models.CharField(max_length=50)
+    tipo_estabelecimento = models.CharField(max_length=100)
+    tipo_manipulacao = models.CharField(max_length=100)
+    num_funcionarios = models.PositiveIntegerField()
+    num_licenca_sanitaria = models.CharField(max_length=50)
+
+    is_active = models.BooleanField(default=True)
+    is_admin = models.BooleanField(default=False)
+
+    objects = EstabelecimentoManager()
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['razao_social', 'cnpj']
+
+    def __str__(self):
+        return self.nome_fantasia
+
+    @property
+    def is_staff(self):
+        return self.is_admin

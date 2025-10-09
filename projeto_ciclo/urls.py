@@ -19,6 +19,9 @@ from django.contrib import admin
 from django.urls import path, include
 from .views import index,saiba_mais
 
+from django.conf import settings
+from django.conf.urls.static import static
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('estabelecimentos/', include(('estabelecimentos.urls', 'estabelecimentos'), namespace='estabelecimentos')),
@@ -27,3 +30,6 @@ urlpatterns = [
     path('', index, name='index'),
     path('saiba_mais/',saiba_mais, name='saiba_mais'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
