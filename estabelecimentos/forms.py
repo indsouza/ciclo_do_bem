@@ -2,7 +2,7 @@ from django import forms
 from .models import Estabelecimento
 
 class EstabelecimentoForm(forms.ModelForm):
-    senha = forms.CharField(widget=forms.PasswordInput())
+    senha = forms.CharField(widget=forms.PasswordInput(), label="Senha")
 
     class Meta:
         model = Estabelecimento
@@ -14,3 +14,10 @@ class EstabelecimentoForm(forms.ModelForm):
             'conselho_classe', 'tipo_estabelecimento', 'tipo_manipulacao', 'num_funcionarios',
             'num_licenca_sanitaria'
         ]
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.set_password(self.cleaned_data['senha'])
+        if commit:
+            user.save()
+        return user
