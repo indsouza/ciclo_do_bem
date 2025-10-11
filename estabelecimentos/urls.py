@@ -1,10 +1,11 @@
 from django.urls import path
 from . import views
-from django.views.generic import TemplateView
 
-app_name = 'estabelecimentos'
+app_name = 'estabelecimentos'  # Necessário para usar o namespace
 
 urlpatterns = [
-    path('cadastrar_estabelecimento/', views.cadastrar_estabelecimento, name='cadastrar_estabelecimento'),
-    path('login_estabelecimento/', TemplateView.as_view(template_name='login_estabelecimento.html'), name='login_estabelecimento'),
+    path('cadastrar/', views.cadastrar_estabelecimento, name='cadastrar_estabelecimento'),
+    path('login/', views.login_estabelecimento, name='login_estabelecimento'),
+    path('perfil/', views.perfil_estabelecimento, name='perfil_estabelecimento'),
+    path('logout/', views.logout_estabelecimento, name='logout_estabelecimento'),
 ]

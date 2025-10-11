@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Perfil de {{ estabelecimento.nome_fantasia }}</h2>
+
+    <ul class="list-group">
+        <li class="list-group-item"><strong>Email:</strong> {{ estabelecimento.email }}</li>
+        <li class="list-group-item"><strong>Razão Social:</strong> {{ estabelecimento.razao_social }}</li>
+        <li class="list-group-item"><strong>CNPJ:</strong> {{ estabelecimento.cnpj }}</li>
+        <li class="list-group-item"><strong>Nome Fantasia:</strong> {{ estabelecimento.nome_fantasia }}</li>
+        <li class="list-group-item"><strong>Endereço:</strong> {{ estabelecimento.endereco }}, {{ estabelecimento.numero }}{% if estabelecimento.complemento %} - {{ estabelecimento.complemento }}{% endif %}, {{ estabelecimento.bairro }}, {{ estabelecimento.cidade }}, {{ estabelecimento.cep }}</li>
+        <li class="list-group-item"><strong>Telefone:</strong> {{ estabelecimento.telefone }}</li>
+        <li class="list-group-item"><strong>Horário de Funcionamento:</strong> {{ estabelecimento.horario_inicio }} - {{ estabelecimento.horario_fim }}</li>
+        <li class="list-group-item"><strong>Responsável:</strong> {{ estabelecimento.nome_proprietario }} ({{ estabelecimento.cargo_funcao }})</li>
+        <li class="list-group-item"><strong>Telefone do Responsável:</strong> {{ estabelecimento.telefone_proprietario }}</li>
+        <li class="list-group-item"><strong>Responsável Técnico:</strong> {{ estabelecimento.responsavel_tecnico }} - {{ estabelecimento.formacao_academica }}</li>
+        <li class="list-group-item"><strong>Tipo de Estabelecimento:</strong> {{ estabelecimento.tipo_estabelecimento }} / {{ estabelecimento.tipo_manipulacao }}</li>
+        <li class="list-group-item"><strong>Funcionários:</strong> {{ estabelecimento.num_funcionarios }}</li>
+        <li class="list-group-item"><strong>Licença Sanitária:</strong> {{ estabelecimento.num_licenca_sanitaria }}</li>
+        {% if estabelecimento.logo %}
+        <li class="list-group-item">
+            <strong>Logo:</strong><br>
+            <img src="{{ estabelecimento.logo.url }}" alt="Logo" style="max-width:200px;">
+        </li>
+        {% endif %}
+    </ul>
+
+    <a href="{% url 'estabelecimentos:logout_estabelecimento' %}" class="btn btn-danger mt-3">Sair</a>
+</div>
+{% endblock %}

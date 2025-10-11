@@ -1,4 +1,29 @@
-{% extends 'base.html'%}
-{%block content%}
-<h1>Faz teu nome Eduardo</h1>
-{% endblock%}
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Login do Estabelecimento</h2>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="POST" class="card p-4 shadow">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" name="email" class="form-control" required id="email">
+        </div>
+        <div class="mb-3">
+            <label for="senha" class="form-label">Senha</label>
+            <input type="password" name="senha" class="form-control" required id="senha">
+        </div>
+        <button type="submit" class="btn btn-success">Entrar</button>
+    </form>
+
+    <p class="mt-3">Não tem conta? <a href="{% url 'estabelecimentos:cadastrar_estabelecimento' %}">Cadastre-se</a></p>
+</div>
+{% endblock %}

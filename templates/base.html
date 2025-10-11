@@ -47,7 +47,7 @@
 
             <!-- Botão Login / Logout -->
             {% if user.is_authenticated %}
-                <form method="POST" action="{% url 'logout' %}" style="display:inline;">
+                <form method="POST" action="{% url 'estabelecimentos:logout_estabelecimento' %}" style="display:inline;">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-outline-danger">Sair</button>
                 </form>

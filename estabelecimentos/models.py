@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 
 # Lista de horários possíveis (para dropdown)
 HORARIOS = [(f"{h:02}:00", f"{h:02}:00") for h in range(6, 23)]
@@ -19,9 +19,11 @@ class EstabelecimentoManager(BaseUserManager):
 
     def create_superuser(self, email, senha=None, **extra_fields):
         extra_fields.setdefault('is_admin', True)
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
         return self.create_user(email, senha, **extra_fields)
 
-class Estabelecimento(AbstractBaseUser):
+class Estabelecimento(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
     razao_social = models.CharField(max_length=150)
     cnpj = models.CharField(max_length=18)
@@ -51,11 +53,12 @@ class Estabelecimento(AbstractBaseUser):
     conselho_classe = models.CharField(max_length=50)
     tipo_estabelecimento = models.CharField(max_length=100)
     tipo_manipulacao = models.CharField(max_length=100)
-    num_funcionarios = models.PositiveIntegerField()
+    num_funcionarios = models.PositiveIntegerField(default=1)
     num_licenca_sanitaria = models.CharField(max_length=50)
 
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=False)
 
     objects = EstabelecimentoManager()
 
@@ -64,7 +67,3 @@ class Estabelecimento(AbstractBaseUser):
 
     def __str__(self):
         return self.nome_fantasia
-
-    @property
-    def is_staff(self):
-        return self.is_admin
