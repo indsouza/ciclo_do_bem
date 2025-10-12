@@ -1,7 +1,9 @@
 from django.urls import path
-from django.views.generic import TemplateView
+from . import views
 
 urlpatterns = [
-    path('cadastrar_instituicao/', TemplateView.as_view(template_name='cadastrar_instituicao.html'), name='cadastrar_instituicao'),
-    path('login_instituicao/', TemplateView.as_view(template_name='login_instituicao.html'), name='login_instituicao'),
+    path('cadastrar/', views.cadastrar_instituicao, name='cadastrar_instituicao'),
+    path('login/', views.login_instituicao, name='login_instituicao'),
+    path('logout/', views.logout_instituicao, name='logout_instituicao'),
+    path('perfil/', views.perfil_instituicao, name='perfil_instituicao'),
 ]

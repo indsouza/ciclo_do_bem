@@ -29,7 +29,11 @@ urlpatterns = [
     path('ofertas/', include(('ofertas.urls', 'ofertas'), namespace='ofertas')),
     path('', index, name='index'),
     path('saiba_mais/',saiba_mais, name='saiba_mais'),
+
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

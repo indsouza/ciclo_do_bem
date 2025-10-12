@@ -1,4 +1,18 @@
-{% extends 'base.html'%}
-{%block content%}
-<h1>Faz teu nome Eduardo</h1>
-{% endblock%}
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5" style="max-width: 400px;">
+  <h2 class="text-center mb-4">Login da Instituição</h2>
+  <form method="POST" class="card p-4 shadow">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label>Email</label>
+      <input type="email" name="email" class="form-control" required>
+    </div>
+    <div class="mb-3">
+      <label>Senha</label>
+      <input type="password" name="senha" class="form-control" required>
+    </div>
+    <button type="submit" class="btn btn-primary w-100">Entrar</button>
+  </form>
+</div>
+{% endblock %}

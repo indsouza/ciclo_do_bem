@@ -1,7 +1,6 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin, Group, Permission
 
-# Lista de horários possíveis (para dropdown)
 HORARIOS = [(f"{h:02}:00", f"{h:02}:00") for h in range(6, 23)]
 
 class EstabelecimentoManager(BaseUserManager):
@@ -36,18 +35,14 @@ class Estabelecimento(AbstractBaseUser, PermissionsMixin):
     bairro = models.CharField(max_length=100)
     cep = models.CharField(max_length=9)
     telefone = models.CharField(max_length=20)
-
     horario_inicio = models.CharField(max_length=5, choices=HORARIOS)
     horario_fim = models.CharField(max_length=5, choices=HORARIOS)
-
     logo = models.ImageField(upload_to='logos/', blank=True, null=True)
-
     nome_proprietario = models.CharField(max_length=150)
     cargo_funcao = models.CharField(max_length=100)
     rg = models.CharField(max_length=20)
     cpf = models.CharField(max_length=14)
     telefone_proprietario = models.CharField(max_length=20)
-
     responsavel_tecnico = models.CharField(max_length=150)
     formacao_academica = models.CharField(max_length=150)
     conselho_classe = models.CharField(max_length=50)
@@ -55,10 +50,13 @@ class Estabelecimento(AbstractBaseUser, PermissionsMixin):
     tipo_manipulacao = models.CharField(max_length=100)
     num_funcionarios = models.PositiveIntegerField(default=1)
     num_licenca_sanitaria = models.CharField(max_length=50)
-
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
+
+    # Evita conflito de reverse accessor
+    groups = models.ManyToManyField(Group, related_name='estabelecimentos_groups', blank=True)
+    user_permissions = models.ManyToManyField(Permission, related_name='estabelecimentos_user_permissions', blank=True)
 
     objects = EstabelecimentoManager()
 

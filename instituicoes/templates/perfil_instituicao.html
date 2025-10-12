@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+  <h2 class="text-center mb-4">{{ instituicao.nome_instituicao }}</h2>
+  <div class="card p-4 shadow">
+    {% if instituicao.logo %}
+      <div class="text-center mb-3">
+        <img src="{{ instituicao.logo.url }}" width="150" class="rounded">
+      </div>
+    {% endif %}
+    <p><strong>Email:</strong> {{ instituicao.email }}</p>
+    <p><strong>CNPJ:</strong> {{ instituicao.cnpj }}</p>
+    <p><strong>Telefone:</strong> {{ instituicao.telefone }}</p>
+    <p><strong>Endereço:</strong> {{ instituicao.endereco }}, {{ instituicao.numero }} - {{ instituicao.bairro }} - {{ instituicao.cidade }}</p>
+    <p><strong>Área de Atuação:</strong> {{ instituicao.area_atuacao }}</p>
+    <p><strong>Serviço Oferecido:</strong> {{ instituicao.servico_oferecido }}</p>
+    <a href="{% url 'logout_instituicao' %}" class="btn btn-danger mt-3">Sair</a>
+  </div>
+</div>
+{% endblock %}
