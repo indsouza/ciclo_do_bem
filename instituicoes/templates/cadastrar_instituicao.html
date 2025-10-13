@@ -1,16 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container mt-4">
-    <h2>Cadastro de Instituição</h2>
+    <h2 class="mb-4">Cadastro de Instituição</h2>
 
+    <!-- Mensagens de sucesso ou erro -->
     {% if messages %}
         {% for message in messages %}
-            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% else %}alert-info{% endif %}" role="alert">
                 {{ message }}
             </div>
         {% endfor %}
     {% endif %}
 
+    <!-- Formulário de cadastro -->
     <form method="POST" enctype="multipart/form-data" class="card p-4 shadow">
         {% csrf_token %}
         {{ form.as_p }}

@@ -10,9 +10,7 @@ class InstituicaoManager(BaseUserManager):
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
         if senha:
-            user.set_password(senha)
-        else:
-            user.set_unusable_password()
+            user.senha = senha  # agora usa o campo senha diretamente
         user.save(using=self._db)
         return user
 
@@ -24,6 +22,7 @@ class InstituicaoManager(BaseUserManager):
 
 class Instituicao(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
+    senha = models.CharField(max_length=128, default='1234')  # <-- ADICIONADO
     razao_social = models.CharField(max_length=150)
     cnpj = models.CharField(max_length=18)
     nome_fantasia = models.CharField(max_length=150)
