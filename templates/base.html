@@ -34,25 +34,31 @@
         <!-- Botões no canto direito -->
         <div class="d-flex align-items-center gap-3">
 
-            <!-- Dropdown Cadastrar -->
-            <div class="dropdown">
-                <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownCadastrar" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                    Cadastrar
-                </button>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownCadastrar">
-                    <li><a class="dropdown-item" href="{% url 'estabelecimentos:cadastrar_estabelecimento'%}">Estabelecimento</a></li>
-                    <li><a class="dropdown-item" href="{% url 'instituicoes:cadastrar_instituicao'%}">Instituição</a></li>
-                </ul>
-            </div>
-
-            <!-- Botão Login / Logout -->
-            {% if user.is_authenticated %}
-                <form method="POST" action="{% url 'estabelecimentos:logout_estabelecimento' %}" style="display:inline;">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-outline-danger">Sair</button>
-                </form>
+            {% if user.is_authenticated or request.session.instituicao_id %}
+                <!-- Botão Perfil -->
+                {% if request.session.instituicao_id %}
+                    <a href="{% url 'instituicoes:perfil_instituicao' %}" class="btn btn-outline-primary">
+                        <i class="bi bi-building me-1"></i> Perfil
+                    </a>
+                {% else %}
+                    <a href="{% url 'estabelecimentos:perfil_estabelecimento' %}" class="btn btn-outline-primary">
+                        <i class="bi bi-shop me-1"></i> Perfil
+                    </a>
+                {% endif %}
             {% else %}
+                <!-- Dropdown Cadastrar -->
+                <div class="dropdown">
+                    <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownCadastrar" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                        Cadastrar
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownCadastrar">
+                        <li><a class="dropdown-item" href="{% url 'estabelecimentos:cadastrar_estabelecimento'%}">Estabelecimento</a></li>
+                        <li><a class="dropdown-item" href="{% url 'instituicoes:cadastrar_instituicao'%}">Instituição</a></li>
+                    </ul>
+                </div>
+
+                <!-- Dropdown Login -->
                 <div class="dropdown">
                     <button class="btn btn-outline-success dropdown-toggle" type="button" id="dropdownLogin" data-bs-toggle="dropdown"
                             aria-expanded="false">
