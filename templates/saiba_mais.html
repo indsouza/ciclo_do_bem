@@ -1,4 +1,592 @@
 {% extends 'base.html'%}
+{% block title %}Saiba Mais{% endblock %}
 {%block content%}
-<h1>Lucas e Phels, vocês são foda.</h1>
+
+<style>
+:root {
+    --cor-fundo: #E6f5f5;
+    --cor-fonte: #674525;
+    --cor-hover: #e69a6e;
+    --cor-destaque: #e7b547;
+}
+
+.hero-section {
+    background: linear-gradient(135deg, rgba(103, 69, 37, 0.85) 0%, rgba(230, 154, 110, 0.85) 100%), 
+                url("https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=1200") center/cover no-repeat;
+    height: 65vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-content {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 3rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    max-width: 700px;
+    text-align: center;
+    animation: fadeInUp 1s ease;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hero-content h1 {
+    color: var(--cor-fonte);
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.hero-content .destaque {
+    color: var(--cor-destaque);
+    font-weight: 700;
+}
+
+.hero-content p {
+    color: var(--cor-fonte);
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+}
+
+.btn-custom {
+    background-color: var(--cor-destaque);
+    color: var(--cor-fonte);
+    font-weight: 600;
+    padding: 0.8rem 2rem;
+    border-radius: 50px;
+    border: none;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-custom:hover {
+    background-color: var(--cor-hover);
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 20px rgba(230, 154, 110, 0.4);
+}
+
+.apresentacao-section {
+    padding: 4rem 0;
+}
+
+.apresentacao-section h1 {
+    color: var(--cor-fonte);
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    position: relative;
+    display: inline-block;
+}
+
+.apresentacao-section h1::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--cor-destaque) 0%, var(--cor-hover) 100%);
+    border-radius: 2px;
+}
+
+.apresentacao-section .lead {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: var(--cor-fonte);
+}
+
+.apresentacao-section .destaque-texto {
+    color: var(--cor-destaque);
+    font-weight: 600;
+}
+
+.impacto-section {
+    background: linear-gradient(135deg, var(--cor-destaque) 0%, var(--cor-hover) 100%);
+    padding: 3rem 0;
+    border-radius: 20px;
+    margin: 3rem 0;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.impacto-section h2 {
+    color: white;
+    font-weight: 700;
+    margin-bottom: 2.5rem;
+}
+
+.impacto-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    height: 100%;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.impacto-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+.impacto-card h3 {
+    color: var(--cor-fonte);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.impacto-card p {
+    color: var(--cor-fonte);
+    margin: 0;
+}
+
+.historia-section {
+    padding: 4rem 0;
+    background-color: white;
+    border-radius: 20px;
+    margin: 3rem 0;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+}
+
+.historia-section h2 {
+    color: var(--cor-fonte);
+    font-weight: 700;
+    margin-bottom: 2rem;
+}
+
+.timeline {
+    position: relative;
+    padding: 2rem 0;
+}
+
+.timeline::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: linear-gradient(180deg, var(--cor-destaque) 0%, var(--cor-hover) 100%);
+    transform: translateX(-50%);
+}
+
+.timeline-item {
+    margin-bottom: 3rem;
+    position: relative;
+}
+
+.timeline-content {
+    background: var(--cor-fundo);
+    padding: 1.5rem;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.timeline-content:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.timeline-year {
+    font-weight: 700;
+    color: var(--cor-destaque);
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+}
+
+.video-section {
+    padding: 3rem 0;
+}
+
+.video-section h2 {
+    color: var(--cor-fonte);
+    font-weight: 700;
+    margin-bottom: 2rem;
+}
+
+.video-wrapper {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
+.galeria-section {
+    padding: 3rem 0;
+}
+
+.galeria-section h2 {
+    color: var(--cor-fonte);
+    font-weight: 700;
+    margin-bottom: 2rem;
+}
+
+.galeria-img {
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    height: 250px;
+    object-fit: cover;
+    width: 100%;
+}
+
+.galeria-img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.como-funciona-section {
+    padding: 4rem 0;
+    background: white;
+    border-radius: 20px;
+    margin: 3rem 0;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+}
+
+.como-funciona-section h2 {
+    color: var(--cor-fonte);
+    font-weight: 700;
+    margin-bottom: 3rem;
+}
+
+.funciona-card {
+    background: var(--cor-fundo);
+    padding: 2.5rem 1.5rem;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    height: 100%;
+    border: 3px solid transparent;
+}
+
+.funciona-card:hover {
+    border-color: var(--cor-destaque);
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+.funciona-card i {
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.funciona-card h3 {
+    color: var(--cor-fonte);
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.funciona-card p {
+    color: var(--cor-fonte);
+    line-height: 1.6;
+}
+
+.mvv-section {
+    padding: 4rem 0;
+}
+
+.mvv-section h2 {
+    color: var(--cor-fonte);
+    font-weight: 700;
+    margin-bottom: 3rem;
+}
+
+.mvv-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    height: 100%;
+    border-left: 5px solid var(--cor-destaque);
+}
+
+.mvv-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.mvv-card h4 {
+    color: var(--cor-destaque);
+    font-weight: 700;
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+.mvv-card p {
+    color: var(--cor-fonte);
+    line-height: 1.7;
+    margin: 0;
+}
+
+.depoimentos-section {
+    padding: 4rem 0;
+    background: linear-gradient(135deg, rgba(231, 181, 71, 0.1) 0%, rgba(230, 154, 110, 0.1) 100%);
+    border-radius: 20px;
+    margin: 3rem 0;
+}
+
+.depoimentos-section h2 {
+    color: var(--cor-fonte);
+    font-weight: 700;
+    margin-bottom: 3rem;
+}
+
+.depoimento-card {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    margin-bottom: 2rem;
+}
+
+.depoimento-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.depoimento-card blockquote {
+    border-left: 5px solid var(--cor-destaque);
+    padding-left: 1.5rem;
+    font-style: italic;
+    color: var(--cor-fonte);
+    margin-bottom: 1rem;
+}
+
+.depoimento-card .blockquote-footer {
+    color: var(--cor-hover);
+    font-weight: 600;
+}
+
+.contato-section {
+    background: linear-gradient(135deg, var(--cor-fonte) 0%, var(--cor-hover) 100%);
+    padding: 4rem 0;
+    text-align: center;
+    border-radius: 20px;
+    margin: 3rem 0;
+}
+
+.contato-section h2 {
+    color: white;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.contato-section p {
+    color: white;
+    font-size: 1.15rem;
+    margin-bottom: 2rem;
+}
+
+.btn-contato {
+    background-color: white;
+    color: var(--cor-fonte);
+    font-weight: 600;
+    padding: 1rem 2.5rem;
+    border-radius: 50px;
+    border: none;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    margin: 0.5rem;
+}
+
+.btn-contato:hover {
+    background-color: var(--cor-destaque);
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 768px) {
+    .hero-content {
+        padding: 2rem;
+    }
+
+    .timeline::before {
+        left: 20px;
+    }
+
+    .impacto-card,
+    .funciona-card,
+    .mvv-card {
+        margin-bottom: 1.5rem;
+    }
+}
+</style>
+
+<section class="hero-section">
+    <div class="hero-content">
+        <h1 class="display-4 fw-bold">Juntos contra o <span class="destaque">desperdício!</span></h1>
+        <p class="lead">Conectando generosidade e sustentabilidade através da tecnologia.</p>
+        <a href="#como-funciona" class="btn-custom">Saiba como funciona</a>
+    </div>
+</section>
+
+<div class="container my-5">
+
+    <div class="text-center apresentacao-section">
+        <h1 class="mb-4">Quem somos</h1>
+        <p class="lead">O <strong>Ciclo do Bem</strong> é uma plataforma inovadora que conecta estabelecimentos que possuem <span class="destaque-texto">excedentes de alimentos</span> com instituições que <span class="destaque-texto">distribuem solidariedade</span>. Nosso propósito é reduzir o desperdício de alimentos e alimentar esperanças, criando um ciclo virtuoso de doação e impacto social positivo.</p>
+        <p class="lead">Acreditamos que nenhum alimento deve ser desperdiçado enquanto existem pessoas passando fome. Por isso, desenvolvemos uma solução tecnológica que facilita a conexão entre quem pode doar e quem precisa receber.</p>
+    </div>
+
+    <section class="impacto-section text-center">
+        <div class="container">
+            <h2 class="mb-4">Nosso impacto até agora</h2>
+            <div class="row justify-content-center g-4">
+                <div class="col-md-4">
+                    <div class="impacto-card">
+                        <h3 class="text-success fw-bold">+10 toneladas</h3>
+                        <p>de alimentos reaproveitados</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="impacto-card">
+                        <h3 class="text-warning fw-bold">+50 instituições</h3>
+                        <p>beneficiadas diretamente</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="impacto-card">
+                        <h3 class="text-primary fw-bold">+2000 pessoas</h3>
+                        <p>alimentadas com esperança</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Vídeo Explicativo -->
+    <div class="video-section">
+        <h2 class="text-center mb-4">Entenda melhor nossa missão</h2>
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="video-wrapper">
+                    <div class="ratio ratio-16x9">
+                        <iframe src="https://www.youtube.com/embed/ScMzIvxBSi4" 
+                                title="Vídeo explicativo"
+                                allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="galeria-section">
+        <h2 class="text-center mb-4">Nossa atuação em imagens</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <img src="https://images.unsplash.com/photo-1593113598332-cd288d649433?w=400" class="galeria-img" alt="Doação de alimentos">
+            </div>
+            <div class="col-md-4">
+                <img src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=400" class="galeria-img" alt="Entrega para instituições">
+            </div>
+            <div class="col-md-4">
+                <img src="https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=400" class="galeria-img" alt="Voluntários ajudando">
+            </div>
+        </div>
+    </div>
+
+    <div id="como-funciona" class="como-funciona-section">
+        <div class="container">
+            <h2 class="text-center mb-5">Como funciona</h2>
+            <div class="row text-center g-4">
+                <div class="col-md-4">
+                    <div class="funciona-card">
+                        <i class="bi bi-shop text-success"></i>
+                        <h3>1. Estabelecimentos</h3>
+                        <p>Cadastram alimentos que não serão vendidos, mas ainda estão próprios para consumo. O processo é simples e rápido através da nossa plataforma.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="funciona-card">
+                        <i class="bi bi-arrow-left-right text-warning"></i>
+                        <h3>2. Plataforma</h3>
+                        <p>Organizamos a logística de entrega e conectamos quem tem com quem precisa, garantindo que os alimentos cheguem com segurança e rapidez.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="funciona-card">
+                        <i class="bi bi-people-fill text-primary"></i>
+                        <h3>3. Instituições</h3>
+                        <p>Recebem os alimentos e distribuem para famílias em situação de vulnerabilidade, transformando vidas através da solidariedade.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mvv-section">
+        <h2 class="text-center mb-5">Missão, Visão e Valores</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="mvv-card">
+                    <h4><i class="bi bi-bullseye me-2"></i>Missão</h4>
+                    <p>Combater o desperdício de alimentos e a fome, conectando estabelecimentos doadores com instituições beneficentes através de uma plataforma tecnológica eficiente e acessível.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="mvv-card">
+                    <h4><i class="bi bi-eye me-2"></i>Visão</h4>
+                    <p>Ser referência nacional em redistribuição de alimentos, criando uma rede solidária que elimine o desperdício e garanta segurança alimentar para todos.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="mvv-card">
+                    <h4><i class="bi bi-heart me-2"></i>Valores</h4>
+                    <p>Solidariedade, sustentabilidade, transparência, inovação e compromisso social. Acreditamos que juntos podemos transformar a realidade de milhares de pessoas.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="depoimentos-section">
+        <div class="container">
+            <h2 class="text-center mb-5">O que dizem sobre nós</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-10">
+                    <div class="depoimento-card">
+                        <blockquote class="blockquote">
+                            <p class="mb-3">"Graças ao Ciclo do Bem, conseguimos alimentar dezenas de famílias toda semana. A plataforma facilitou muito o processo de recebimento de doações e nos permitiu ajudar ainda mais pessoas."</p>
+                            <footer class="blockquote-footer">Maria das Dores, <cite title="Instituição Solidária">Instituição Solidária</cite></footer>
+                        </blockquote>
+                    </div>
+                    <div class="depoimento-card">
+                        <blockquote class="blockquote">
+                            <p class="mb-3">"Como proprietário de um restaurante, sempre me incomodou o desperdício de alimentos. Com o Ciclo do Bem, encontrei uma forma prática de doar nossos excedentes e fazer a diferença na comunidade."</p>
+                            <footer class="blockquote-footer">João Silva, <cite title="Restaurante Sabor & Arte">Restaurante Sabor & Arte</cite></footer>
+                        </blockquote>
+                    </div>
+                    <div class="depoimento-card">
+                        <blockquote class="blockquote">
+                            <p class="mb-3">"O Ciclo do Bem transformou a forma como nossa padaria lida com os produtos do dia. Agora, ao invés de descartar, doamos para quem realmente precisa. É gratificante fazer parte dessa corrente do bem!"</p>
+                            <footer class="blockquote-footer">Ana Paula, <cite title="Padaria Pão Nosso">Padaria Pão Nosso</cite></footer>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<section class="contato-section">
+    <div class="container">
+        <h2 class="mb-3">Quer fazer parte dessa corrente do bem?</h2>
+        <p class="lead mb-4">Cadastre seu estabelecimento ou instituição e comece a transformar vidas hoje mesmo.</p>
+        <a href="{% url 'estabelecimentos:login_estabelecimento' %}" class="btn-contato">Sou Estabelecimento</a>
+        <a href="{% url 'instituicoes:login_instituicao' %}" class="btn-contato">Sou Instituição</a>
+    </div>
+</section>
 {% endblock%}
