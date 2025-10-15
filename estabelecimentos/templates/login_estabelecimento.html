@@ -1,29 +1,104 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
-<div class="container mt-4">
-    <h2>Login do Estabelecimento</h2>
+<div class="d-flex justify-content-center align-items-center" style="min-height: 90vh;">
+  <div class="card shadow-lg p-5 w-100" style="max-width: 420px; border-radius: 15px;">
 
+    <!-- Cabeçalho -->
+    <div class="text-center mb-4">
+      <img src="{% static 'img/logo_ciclo.png' %}" alt="Logo Ciclo do Bem" width="90" class="mb-3">
+      <h3 class="fw-bold text-primary mb-1">Login do Estabelecimento</h3>
+      <p class="text-muted">Acesse sua conta para continuar</p>
+    </div>
+
+    <!-- Mensagens -->
     {% if messages %}
-        {% for message in messages %}
-            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
-                {{ message }}
-            </div>
-        {% endfor %}
+      {% for message in messages %}
+        <div class="alert {% if message.tags %}alert-{{ message.tags }}{% else %}alert-info{% endif %}" role="alert">
+          {{ message }}
+        </div>
+      {% endfor %}
     {% endif %}
 
-    <form method="POST" class="card p-4 shadow">
-        {% csrf_token %}
-        <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input type="email" name="email" class="form-control" required id="email">
-        </div>
-        <div class="mb-3">
-            <label for="senha" class="form-label">Senha</label>
-            <input type="password" name="senha" class="form-control" required id="senha">
-        </div>
-        <button type="submit" class="btn btn-success">Entrar</button>
+    <!-- Formulário -->
+    <form method="POST" class="mt-3">
+      {% csrf_token %}
+
+      <div class="mb-4 position-relative">
+        <label for="email" class="form-label fw-semibold">Email</label>
+        <i class="bi bi-envelope-fill"></i>
+        <input type="email" id="email" name="email" class="form-control" placeholder="Digite seu email" required>
+      </div>
+
+      <div class="mb-4 position-relative">
+        <label for="senha" class="form-label fw-semibold">Senha</label>
+        <i class="bi bi-lock-fill"></i>
+        <input type="password" id="senha" name="senha" class="form-control" placeholder="Digite sua senha" required>
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100 fw-bold py-2">
+        <i class="bi bi-box-arrow-in-right me-2"></i> Entrar
+      </button>
     </form>
 
-    <p class="mt-3">Não tem conta? <a href="{% url 'estabelecimentos:cadastrar_estabelecimento' %}">Cadastre-se</a></p>
+    <div class="text-center mt-4">
+      <p class="text-muted mb-1">Não tem conta?</p>
+      <a href="{% url 'estabelecimentos:cadastrar_estabelecimento' %}" class="text-decoration-none fw-bold text-success">
+        <i class="bi bi-person-plus-fill me-1"></i> Cadastre-se aqui
+      </a>
+    </div>
+  </div>
 </div>
+
+<!-- CSS de estilo -->
+<style>
+  .card {
+    background-color: #ffffff;
+  }
+
+  .form-label {
+    margin-bottom: 6px;
+  }
+
+  /* Ícones mais baixos dentro das caixas de input */
+  .position-relative i.bi {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(15%); /* <-- abaixei os ícones */
+    color: #6c757d;
+    pointer-events: none;
+    font-size: 0.95rem;
+  }
+
+  input.form-control {
+    border-radius: 10px !important;
+    border: 1px solid #ced4da !important;
+    padding: 12px 15px 12px 44px !important;
+    font-size: 1rem;
+    transition: all 0.15s ease-in-out;
+    height: 50px;
+  }
+
+  input.form-control:focus {
+    border-color: #0d6efd !important;
+    box-shadow: 0 0 8px rgba(13,110,253,0.18) !important;
+  }
+
+  .btn-primary {
+    background-color: #0d6efd !important;
+    border: none !important;
+    border-radius: 10px !important;
+    transition: transform 0.12s ease, background-color 0.12s ease;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    background-color: #0b5ed7 !important;
+  }
+
+  .btn-primary i.bi {
+    vertical-align: middle;
+  }
+</style>
 {% endblock %}
