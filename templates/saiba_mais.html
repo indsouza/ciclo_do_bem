@@ -105,6 +105,7 @@
     font-size: 1.15rem;
     line-height: 1.8;
     color: var(--cor-fonte);
+    text-align: justify;
 }
 
 .apresentacao-section .destaque-texto {
@@ -192,6 +193,7 @@
     border-radius: 15px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
+    text-align: justify;
 }
 
 .timeline-content:hover {
@@ -289,6 +291,7 @@
 .funciona-card p {
     color: var(--cor-fonte);
     line-height: 1.6;
+    text-align: justify;
 }
 
 .mvv-section {
@@ -327,6 +330,7 @@
     color: var(--cor-fonte);
     line-height: 1.7;
     margin: 0;
+    text-align: justify;
 }
 
 .depoimentos-section {
@@ -362,6 +366,7 @@
     font-style: italic;
     color: var(--cor-fonte);
     margin-bottom: 1rem;
+    text-align: justify;
 }
 
 .depoimento-card .blockquote-footer {
@@ -409,6 +414,10 @@
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
 }
 
+.video-section .lead {
+    text-align: justify;
+}
+
 @media (max-width: 768px) {
     .hero-content {
         padding: 2rem;
@@ -430,14 +439,13 @@
     <div class="hero-content">
         <h1 class="display-4 fw-bold">Juntos contra o <span class="destaque">desperdício!</span></h1>
         <p class="lead">Conectando generosidade e sustentabilidade através da tecnologia.</p>
-        <a href="#como-funciona" class="btn-custom">Saiba como funciona</a>
     </div>
 </section>
 
 <div class="container my-5">
 
-    <div class="text-center apresentacao-section">
-        <h1 class="mb-4">Quem somos</h1>
+    <div class="apresentacao-section">
+        <h1 class="mb-4 text-center">Quem somos</h1>
         <p class="lead">O <strong>Ciclo do Bem</strong> é uma plataforma inovadora que conecta estabelecimentos que possuem 
                         <span class="destaque-texto">excedentes de alimentos</span> com instituições que 
                         <span class="destaque-texto">distribuem solidariedade</span>. Nosso propósito é reduzir o desperdício de
@@ -472,20 +480,20 @@
         </div>
     </section>
 
-    <div class="video-section text-center">
+<div class="video-section">
     <h2 class="text-center mb-4">Entenda melhor nossa missão</h2>
-    <p class= "lead">
+    <p class="lead">
         Em um mundo onde o desperdício de alimentos é uma triste realidade, e a fome ainda assombra muitas famílias,
         nossa missão é clara: conectar quem precisa com quem pode ajudar. Nossa plataforma nasceu da vontade de
         transformar essa realidade, criando pontes entre restaurantes, estabelecimentos e instituições que desejam
         fazer a diferença.
     </p>
-    <p class= "lead">
+    <p class="lead">
         Acreditamos que a solidariedade e a colaboração são os ingredientes essenciais para um futuro mais justo.
         E é com essa visão que celebramos a Lei Federal de 2020, um marco que abriu portas para a doação de
         alimentos por parte dos restaurantes, combatendo o desperdício e nutrindo esperanças.
     </p>
-    <p class= "lead">
+    <p class="lead">
         Para entender melhor como essa lei funciona e como ela impulsiona nossa missão, assista ao vídeo abaixo.
         Nele, é explicado de forma clara e concisa os benefícios dessa iniciativa e como ela se encaixa em nossa
         plataforma:
@@ -503,7 +511,6 @@
     </div>
 </div>
 
-
     <div class="galeria-section">
         <h2 class="text-center mb-4">Nossa atuação em imagens</h2>
         <div class="row g-4">
@@ -519,7 +526,7 @@
         </div>
     </div>
 
-    <div id="como-funciona" class="como-funciona-section">
+    <div class="como-funciona-section">
         <div class="container">
             <h2 class="text-center mb-5">Como funciona</h2>
             <div class="row text-center g-4">
@@ -534,7 +541,7 @@
                     <div class="funciona-card">
                         <i class="bi bi-arrow-left-right text-warning"></i>
                         <h3>2. Plataforma</h3>
-                        <p>Organizamos a logística de entrega e conectamos quem tem com quem precisa, garantindo que os alimentos cheguem com segurança e rapidez.</p>
+                        <p>Unimos quem quer ajudar e quem precisa de apoio, tornando mais fácil combinar e organizar as doações entre as partes.</p>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -606,8 +613,8 @@
     <div class="container">
         <h2 class="mb-3">Quer fazer parte dessa corrente do bem?</h2>
         <p class="lead mb-4">Cadastre seu estabelecimento ou instituição e comece a transformar vidas hoje mesmo.</p>
-        <a href="{% url 'estabelecimentos:login_estabelecimento' %}" class="btn-contato">Sou Estabelecimento</a>
-        <a href="{% url 'instituicoes:login_instituicao' %}" class="btn-contato">Sou Instituição</a>
+        <a href="{% url 'estabelecimentos:cadastrar_estabelecimento' %}" class="btn-contato">Sou Estabelecimento</a>
+        <a href="{% url 'instituicoes:cadastrar_instituicao' %}" class="btn-contato">Sou Instituição</a>
     </div>
 </section>
 {% endblock%}
