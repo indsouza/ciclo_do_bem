@@ -44,7 +44,7 @@
                 </div>
                 <div class="col-md-6">
                     <label for="id_confirm_senha" class="form-label fw-semibold">Confirmação de Senha</label>
-                    <input type="password" id="id_confirm_senha" class="form-control" placeholder="Confirme sua senha">
+                    <input type="password" id="id_confirm_senha" name="confirm_senha" class="form-control" placeholder="Confirme sua senha">
                     <div id="senha-error" class="text-danger small mt-1" style="display:none;">As senhas não coincidem.</div>
                 </div>
             </div>
@@ -65,6 +65,20 @@
                         </div>
                     {% endif %}
                 {% endfor %}
+                <div class="col-md-6">
+                    <label for="{{ form.horario_inicio.id_for_label }}" class="form-label fw-semibold">Horário de Início</label>
+                    {{ form.horario_inicio }}
+                    {% for error in form.horario_inicio.errors %}
+                        <div class="text-danger small mt-1">{{ error }}</div>
+                    {% endfor %}
+                </div>
+                <div class="col-md-6">
+                    <label for="{{ form.horario_fim.id_for_label }}" class="form-label fw-semibold">Horário de Fim</label>
+                    {{ form.horario_fim }}
+                    {% for error in form.horario_fim.errors %}
+                        <div class="text-danger small mt-1">{{ error }}</div>
+                    {% endfor %}
+                </div>
             </div>
 
             <!-- Seção 3: Endereço -->
@@ -85,13 +99,13 @@
                 {% endfor %}
             </div>
 
-            <!-- Seção 4: Contato e Funcionamento -->
+            <!-- Seção 4: Contato -->
             <h5 class="fw-bold text-secondary mb-3 border-bottom pb-2">
-                <i class="bi bi-telephone me-2"></i>Contato e Horário
+                <i class="bi bi-telephone me-2"></i>Contato
             </h5>
             <div class="row g-4 mb-4">
                 {% for field in form %}
-                    {% if field.name in 'telefone horario_funcionamento_inicio horario_funcionamento_fim' %}
+                    {% if field.name in 'telefone' %}
                         <div class="col-md-4">
                             <label for="{{ field.id_for_label }}" class="form-label fw-semibold">{{ field.label }}</label>
                             {{ field }}
@@ -103,13 +117,31 @@
                 {% endfor %}
             </div>
 
-            <!-- Seção 5: Responsável -->
+            <!-- Seção 5: Responsável Legal -->
             <h5 class="fw-bold text-secondary mb-3 border-bottom pb-2">
                 <i class="bi bi-person-badge me-2"></i>Responsável Legal
             </h5>
             <div class="row g-4 mb-4">
                 {% for field in form %}
-                    {% if field.name in 'nome_responsavel cargo rg cpf telefone_responsavel responsavel_tecnico formacao_academica' %}
+                    {% if field.name in 'nome_proprietario cargo_funcao rg cpf telefone_proprietario responsavel_tecnico formacao_academica conselho_classe' %}
+                        <div class="col-md-6">
+                            <label for="{{ field.id_for_label }}" class="form-label fw-semibold">{{ field.label }}</label>
+                            {{ field }}
+                            {% for error in field.errors %}
+                                <div class="text-danger small mt-1">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+            <!-- Seção 6: Informações Adicionais -->
+            <h5 class="fw-bold text-secondary mb-3 border-bottom pb-2">
+                <i class="bi bi-people me-2"></i>Informações Adicionais
+            </h5>
+            <div class="row g-4 mb-4">
+                {% for field in form %}
+                    {% if field.name in 'tipo_estabelecimento tipo_manipulacao num_funcionarios num_licenca_sanitaria' %}
                         <div class="col-md-6">
                             <label for="{{ field.id_for_label }}" class="form-label fw-semibold">{{ field.label }}</label>
                             {{ field }}
@@ -162,7 +194,7 @@
 <script>
 document.getElementById('form-estabelecimento').addEventListener('submit', function(event) {
     const senha = document.getElementById('id_senha').value;
-    const confirmSenha = document.getElementById('id_confirm_senha') ? document.getElementById('id_confirm_senha').value : '';
+    const confirmSenha = document.getElementById('id_confirm_senha').value;
     const errorMsg = document.getElementById('senha-error');
 
     if (senha !== confirmSenha) {

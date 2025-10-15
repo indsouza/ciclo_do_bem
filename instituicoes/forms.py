@@ -16,8 +16,8 @@ class InstituicaoForm(forms.ModelForm):
 
     def save(self, commit=True):
         usuario = super().save(commit=False)
-        # agora salva a senha em texto simples (sem set_password)
-        usuario.senha = self.cleaned_data['senha']
+        # agora salva a senha usando set_password
+        usuario.set_password(self.cleaned_data['senha'])
         if commit:
             usuario.save()
         return usuario

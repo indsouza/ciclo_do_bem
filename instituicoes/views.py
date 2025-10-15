@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import InstituicaoForm
 from .models import Instituicao
+from django.contrib.auth import authenticate, login, logout
 
 # View de cadastro usando form
 def cadastrar_instituicao(request):
@@ -9,20 +10,21 @@ def cadastrar_instituicao(request):
         form = InstituicaoForm(request.POST, request.FILES)
         if form.is_valid():
             usuario = form.save(commit=False)
-            # Agora a senha será salva normalmente como texto (sem set_password)
-            usuario.senha = form.cleaned_data['senha']
+            # Salva a senha de forma segura usando set_password do AbstractBaseUser
+            usuario.set_password(form.cleaned_data['senha'])
             usuario.save()
             messages.success(request, 'Instituição cadastrada com sucesso!')
             return redirect('instituicoes:login_instituicao')
         else:
-            messages.error(request, 'Erro ao cadastrar instituição. Verifique os dados.')
+            # Mostra os erros detalhados do form
+            messages.error(request, f'Erro ao cadastrar instituição: {form.errors}')
     else:
         form = InstituicaoForm()
 
     return render(request, 'cadastrar_instituicao.html', {'form': form})
 
 
-# Login simples da instituição (sem Django auth)
+# Login simples da instituição (sem Django auth completo)
 def login_instituicao(request):
     if request.method == 'POST':
         email = request.POST.get('email')
@@ -30,8 +32,9 @@ def login_instituicao(request):
 
         try:
             usuario = Instituicao.objects.get(email=email)
-            if usuario.senha == senha:
-                # guarda o ID da instituição na sessão
+            # Usando check_password do AbstractBaseUser
+            if usuario.check_password(senha):
+                # Guarda o ID da instituição na sessão
                 request.session['instituicao_id'] = usuario.id
                 request.session['instituicao_nome'] = usuario.nome_fantasia
                 messages.success(request, f"Bem-vindo, {usuario.nome_fantasia}!")
