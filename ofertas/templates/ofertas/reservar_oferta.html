@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Reservar Oferta: {{ oferta.nome_produto }}</h2>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="card mb-3">
+        <div class="row g-0">
+            <div class="col-md-4">
+                {% if oferta.foto %}
+                    <img src="{{ oferta.foto.url }}" class="img-fluid rounded-start" alt="{{ oferta.nome_produto }}">
+                {% else %}
+                    <img src="{% static 'img/default_food.png' %}" class="img-fluid rounded-start" alt="Sem foto">
+                {% endif %}
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">{{ oferta.nome_produto }}</h5>
+                    <p class="card-text"><strong>Estabelecimento:</strong> {{ oferta.estabelecimento.nome_fantasia }}</p>
+                    <p class="card-text"><strong>Descrição:</strong> {{ oferta.descricao }}</p>
+                    <p class="card-text"><strong>Quantidade Disponível:</strong> {{ oferta.quantidade }}</p>
+                    <p class="card-text"><strong>Validade do Produto:</strong> {{ oferta.data_validade_produto|date:"d/m/Y" }}</p>
+                    <p class="card-text"><strong>Expira em:</strong> {{ oferta.data_expiracao_oferta|date:"d/m/Y H:i" }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="id_quantidade" class="form-label">Quantidade a reservar:</label>
+            <input type="number" name="quantidade" id="id_quantidade" class="form-control" min="1" max="{{ oferta.quantidade }}" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Confirmar Reserva</button>
+        <a href="{% url 'ofertas:ofertas_disponiveis' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}
+
