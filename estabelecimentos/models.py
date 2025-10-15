@@ -17,9 +17,9 @@ class EstabelecimentoManager(BaseUserManager):
         return user
 
     def create_superuser(self, email, senha=None, **extra_fields):
-        extra_fields.setdefault('is_admin', True)
-        extra_fields.setdefault('is_staff', True)
-        extra_fields.setdefault('is_superuser', True)
+        extra_fields.setdefault("is_admin", True)
+        extra_fields.setdefault("is_staff", True)
+        extra_fields.setdefault("is_superuser", True)
         return self.create_user(email, senha, **extra_fields)
 
 class Estabelecimento(AbstractBaseUser, PermissionsMixin):
@@ -37,7 +37,7 @@ class Estabelecimento(AbstractBaseUser, PermissionsMixin):
     telefone = models.CharField(max_length=20)
     horario_inicio = models.CharField(max_length=5, choices=HORARIOS)
     horario_fim = models.CharField(max_length=5, choices=HORARIOS)
-    logo = models.ImageField(upload_to='logos/', blank=True, null=True)
+    logo = models.ImageField(upload_to="logos/", blank=True, null=True)
     nome_proprietario = models.CharField(max_length=150)
     cargo_funcao = models.CharField(max_length=100)
     rg = models.CharField(max_length=20)
@@ -55,13 +55,13 @@ class Estabelecimento(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
 
     # Evita conflito de reverse accessor
-    groups = models.ManyToManyField(Group, related_name='estabelecimentos_groups', blank=True)
-    user_permissions = models.ManyToManyField(Permission, related_name='estabelecimentos_user_permissions', blank=True)
+    groups = models.ManyToManyField(Group, related_name="estabelecimentos_groups", blank=True)
+    user_permissions = models.ManyToManyField(Permission, related_name="estabelecimentos_user_permissions", blank=True)
 
     objects = EstabelecimentoManager()
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['razao_social', 'cnpj']
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = ["razao_social", "cnpj"]
 
     def __str__(self):
         return self.nome_fantasia

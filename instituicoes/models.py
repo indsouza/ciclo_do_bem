@@ -10,19 +10,20 @@ class InstituicaoManager(BaseUserManager):
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
         if senha:
-            user.senha = senha  # agora usa o campo senha diretamente
+            user.set_password(senha)
+        else:
+            user.set_unusable_password()
         user.save(using=self._db)
         return user
 
     def create_superuser(self, email, senha=None, **extra_fields):
-        extra_fields.setdefault('is_admin', True)
-        extra_fields.setdefault('is_staff', True)
-        extra_fields.setdefault('is_superuser', True)
+        extra_fields.setdefault("is_admin", True)
+        extra_fields.setdefault("is_staff", True)
+        extra_fields.setdefault("is_superuser", True)
         return self.create_user(email, senha, **extra_fields)
 
 class Instituicao(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
-    senha = models.CharField(max_length=128, default='1234')  # <-- ADICIONADO
     razao_social = models.CharField(max_length=150)
     cnpj = models.CharField(max_length=18)
     nome_fantasia = models.CharField(max_length=150)
@@ -36,7 +37,7 @@ class Instituicao(AbstractBaseUser, PermissionsMixin):
     telefone = models.CharField(max_length=20)
     horario_inicio = models.CharField(max_length=5, choices=HORARIOS)
     horario_fim = models.CharField(max_length=5, choices=HORARIOS)
-    logo = models.ImageField(upload_to='logos/', blank=True, null=True)
+    logo = models.ImageField(upload_to="logos/", blank=True, null=True)
     nome_responsavel = models.CharField(max_length=150)
     cargo_funcao = models.CharField(max_length=100)
     rg = models.CharField(max_length=20)
@@ -49,13 +50,13 @@ class Instituicao(AbstractBaseUser, PermissionsMixin):
     is_admin = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
 
-    groups = models.ManyToManyField(Group, related_name='instituicoes_groups', blank=True)
-    user_permissions = models.ManyToManyField(Permission, related_name='instituicoes_user_permissions', blank=True)
+    groups = models.ManyToManyField(Group, related_name="instituicoes_groups", blank=True)
+    user_permissions = models.ManyToManyField(Permission, related_name="instituicoes_user_permissions", blank=True)
 
     objects = InstituicaoManager()
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['razao_social', 'cnpj']
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = ["razao_social", "cnpj"]
 
     def __str__(self):
         return self.nome_fantasia

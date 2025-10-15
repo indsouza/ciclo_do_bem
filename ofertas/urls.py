@@ -1,9 +1,12 @@
 from django.urls import path
-from django.views.generic import TemplateView
+from . import views
 
 urlpatterns = [
-    path('criar_oferta/', TemplateView.as_view(template_name='criar_oferta.html'), name='criar_oferta'),
-    path('editar_oferta/', TemplateView.as_view(template_name='editar_oferta.html'), name='editar_oferta'),
-    path('excluir_oferta/', TemplateView.as_view(template_name='excluir_oferta.html'), name='excluir_oferta'),
-    path('minhas_ofertas/', TemplateView.as_view(template_name='minhas_ofertas.html'), name='minhas_ofertas'),
+    path("criar_oferta/", views.criar_oferta, name="criar_oferta"),
+    path("minhas_ofertas/", views.minhas_ofertas, name="minhas_ofertas"),
+    path("editar_oferta/<int:pk>/", views.editar_oferta, name="editar_oferta"),
+    path("excluir_oferta/<int:pk>/", views.excluir_oferta, name="excluir_oferta"),
+    path("disponiveis/", views.ofertas_disponiveis, name="ofertas_disponiveis"),
+    path("reservar/<int:pk>/", views.reservar_oferta, name="reservar_oferta"),
+    path("minhas_reservas_instituicao/", views.minhas_reservas, name="minhas_reservas_instituicao"),
 ]

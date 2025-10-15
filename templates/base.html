@@ -31,41 +31,74 @@
             <span class="logo-text mb-0">Ciclo do Bem</span>
         </a>
 
-        <!-- Botões no canto direito -->
-        <div class="d-flex align-items-center gap-3">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-            <!-- Dropdown Cadastrar -->
-            <div class="dropdown">
-                <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownCadastrar" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                    Cadastrar
-                </button>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownCadastrar">
-                    <li><a class="dropdown-item" href="{% url 'estabelecimentos:cadastrar_estabelecimento'%}">Estabelecimento</a></li>
-                    <li><a class="dropdown-item" href="{% url 'instituicoes:cadastrar_instituicao'%}">Instituição</a></li>
+            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                <ul class="navbar-nav">
+                    {% if user.is_authenticated or request.session.instituicao_id %}
+                        {% if request.session.instituicao_id %}
+                            <li class="nav-item">
+                                <a class="nav-link btn btn-outline-info mx-1" href="{% url 'ofertas:ofertas_disponiveis' %}">
+                                    <i class="bi bi-basket me-1"></i> Ofertas Disponíveis
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link btn btn-outline-secondary mx-1" href="{% url 'ofertas:minhas_reservas_instituicao' %}">
+                                    <i class="bi bi-bookmark-check me-1"></i> Minhas Reservas
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link btn btn-outline-info mx-1" href="{% url 'ofertas:minhas_ofertas' %}">
+                                    <i class="bi bi-box-seam me-1"></i> Minhas Ofertas
+                                </a>
+                            </li>
+                        {% endif %}
+                    {% endif %}
                 </ul>
             </div>
 
-            <!-- Botão Login / Logout -->
-            {% if user.is_authenticated %}
-                <form method="POST" action="{% url 'estabelecimentos:logout_estabelecimento' %}" style="display:inline;">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-outline-danger">Sair</button>
-                </form>
-            {% else %}
-                <div class="dropdown">
-                    <button class="btn btn-outline-success dropdown-toggle" type="button" id="dropdownLogin" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                        Login
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownLogin">
-                        <li><a class="dropdown-item" href="{% url 'estabelecimentos:login_estabelecimento'%}">Estabelecimento</a></li>
-                        <li><a class="dropdown-item" href="{% url 'instituicoes:login_instituicao'%}">Instituição</a></li>
-                    </ul>
-                </div>
-            {% endif %}
+            <!-- Botões no canto direito -->
+            <div class="d-flex align-items-center gap-3">
+                {% if user.is_authenticated or request.session.instituicao_id %}
+                    <!-- Botão Perfil -->
+                    {% if request.session.instituicao_id %}
+                        <a href="{% url 'instituicoes:perfil_instituicao' %}" class="btn btn-outline-primary">
+                            <i class="bi bi-building me-1"></i> Perfil
+                        </a>
+                    {% else %}
+                        <a href="{% url 'estabelecimentos:perfil_estabelecimento' %}" class="btn btn-outline-primary">
+                            <i class="bi bi-shop me-1"></i> Perfil
+                        </a>
+                    {% endif %}
+                {% else %}
+                    <!-- Dropdown Cadastrar -->
+                    <div class="dropdown">
+                        <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownCadastrar" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                            Cadastrar
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownCadastrar">
+                            <li><a class="dropdown-item" href="{% url 'estabelecimentos:cadastrar_estabelecimento'%}">Estabelecimento</a></li>
+                            <li><a class="dropdown-item" href="{% url 'instituicoes:cadastrar_instituicao'%}">Instituição</a></li>
+                        </ul>
+                    </div>
 
-        </div>
+                    <!-- Dropdown Login -->
+                    <div class="dropdown">
+                        <button class="btn btn-outline-success dropdown-toggle" type="button" id="dropdownLogin" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                            Login
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownLogin">
+                            <li><a class="dropdown-item" href="{% url 'estabelecimentos:login_estabelecimento'%}">Estabelecimento</a></li>
+                            <li><a class="dropdown-item" href="{% url 'instituicoes:login_instituicao'%}">Instituição</a></li>
+                        </ul>
+                    </div>
+                {% endif %}
+            </div>
     </div>
 </nav>
 
