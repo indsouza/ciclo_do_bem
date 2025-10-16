@@ -94,6 +94,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 AUTH_USER_MODEL = 'estabelecimentos.Estabelecimento'
+AUTH_USER_MODEL = 'instituicoes.Instituicao'
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
@@ -103,3 +104,7 @@ AUTHENTICATION_BACKENDS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+LOGIN_URL = '/estabelecimentos/login/'  # redireciona usuários não logados
+LOGIN_URL = '/instituicoes/login/'  # ou '/estabelecimentos/login/', dependendo do caso
+LOGIN_REDIRECT_URL = '/'            # para onde redirecionar depois do login
+LOGOUT_REDIRECT_URL = '/instituicoes/login/'  # após logout

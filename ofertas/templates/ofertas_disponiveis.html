@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="mb-4">Ofertas Disponíveis</h2>
+
+<!-- Filtro -->
+<form method="get" action="{% url 'ofertas:ofertas_disponiveis' %}" class="row g-3 mb-4">
+    <div class="col-md-6">
+        <input type="text" name="q" class="form-control" placeholder="Pesquisar por produto ou estabelecimento" value="{{ query }}">
+    </div>
+    <div class="col-md-4">
+        <input type="date" name="validade_produto" class="form-control" value="{{ validade_produto }}">
+    </div>
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-primary w-100">Filtrar</button>
+    </div>
+</form>
+
+<!-- Lista de ofertas -->
+<div class="row">
+    {% if ofertas %}
+        {% for oferta in ofertas %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    {% if oferta.foto %}
+                        <img src="{{ oferta.foto.url }}" class="card-img-top" alt="{{ oferta.nome_produto }}" style="height:200px; object-fit:cover;">
+                    {% endif %}
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">{{ oferta.nome_produto }}</h5>
+                        <p class="card-text"><strong>Estabelecimento:</strong> {{ oferta.estabelecimento.nome_fantasia }}</p>
+                        <p class="card-text">{{ oferta.descricao|truncatewords:20 }}</p>
+                        <p class="card-text"><strong>Quantidade disponível:</strong> {{ oferta.quantidade }}</p>
+                        <p class="card-text"><strong>Validade do produto:</strong> {{ oferta.data_validade_produto }}</p>
+                        <p class="card-text"><strong>Expira em:</strong> {{ oferta.data_expiracao_oferta }}</p>
+
+                        <form method="post" action="{% url 'ofertas:reservar_oferta' oferta.pk %}" class="mt-auto">
+                            {% csrf_token %}
+                            <div class="input-group mb-2">
+                                <input type="number" name="quantidade" min="1" max="{{ oferta.quantidade }}" class="form-control" placeholder="Quantidade" required>
+                                <button class="btn btn-success" type="submit">Reservar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>Nenhuma oferta disponível no momento.</p>
+    {% endif %}
+</div>
+
+<a href="{% url 'ofertas:minhas_reservas_instituicao' %}" class="btn btn-outline-primary mt-3">
+    <i class="bi bi-bookmark-check me-1"></i> Ver minhas reservas
+</a>
+{% endblock %}

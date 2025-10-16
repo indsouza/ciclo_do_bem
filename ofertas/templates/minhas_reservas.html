@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h2>Minhas Reservas</h2>
+
+{% if reservas %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Produto</th>
+                <th>Estabelecimento</th>
+                <th>Quantidade reservada</th>
+                <th>Data da reserva</th>
+                <th>Confirmada</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for reserva in reservas %}
+                <tr>
+                    <td>{{ reserva.oferta.nome_produto }}</td>
+                    <td>{{ reserva.oferta.estabelecimento.nome_fantasia }}</td>
+                    <td>{{ reserva.quantidade_reservada }}</td>
+                    <td>{{ reserva.data_reserva }}</td>
+                    <td>{{ reserva.confirmada|yesno:"Sim,Não" }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>Você ainda não fez nenhuma reserva.</p>
+{% endif %}
+
+<a href="{% url 'ofertas:ofertas_disponiveis' %}">Ver ofertas disponíveis</a>
+{% endblock %}

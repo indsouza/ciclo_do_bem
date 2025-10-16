@@ -1,65 +1,57 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import InstituicaoForm
-from .models import Instituicao
 from django.contrib.auth import authenticate, login, logout
+from .models import Instituicao
 
-# View de cadastro usando form
 def cadastrar_instituicao(request):
     if request.method == 'POST':
         form = InstituicaoForm(request.POST, request.FILES)
-        if form.is_valid():
-            usuario = form.save(commit=False)
-            # Salva a senha de forma segura usando set_password do AbstractBaseUser
-            usuario.set_password(form.cleaned_data['senha'])
-            usuario.save()
-            messages.success(request, 'Instituição cadastrada com sucesso!')
+        senha = request.POST.get('senha')
+        confirm_senha = request.POST.get('confirm_senha')
+
+        if senha != confirm_senha:
+            messages.error(request, 'As senhas não coincidem.')
+        elif form.is_valid():
+            instituicao = form.save(commit=False)
+            instituicao.set_password(senha)
+            instituicao.save()
+            messages.success(request, 'Cadastro realizado com sucesso! Faça login para continuar.')
             return redirect('instituicoes:login_instituicao')
         else:
-            # Mostra os erros detalhados do form
-            messages.error(request, f'Erro ao cadastrar instituição: {form.errors}')
+            messages.error(request, 'Por favor, corrija os erros abaixo.')
     else:
         form = InstituicaoForm()
 
     return render(request, 'cadastrar_instituicao.html', {'form': form})
 
 
-# Login simples da instituição (sem Django auth completo)
 def login_instituicao(request):
     if request.method == 'POST':
         email = request.POST.get('email')
         senha = request.POST.get('senha')
+        user = authenticate(request, email=email, password=senha)
 
-        try:
-            usuario = Instituicao.objects.get(email=email)
-            # Usando check_password do AbstractBaseUser
-            if usuario.check_password(senha):
-                # Guarda o ID da instituição na sessão
-                request.session['instituicao_id'] = usuario.id
-                request.session['instituicao_nome'] = usuario.nome_fantasia
-                messages.success(request, f"Bem-vindo, {usuario.nome_fantasia}!")
-                return redirect('instituicoes:perfil_instituicao')
-            else:
-                messages.error(request, 'Senha incorreta.')
-        except Instituicao.DoesNotExist:
-            messages.error(request, 'Instituição não encontrada.')
+        if user:
+            login(request, user)
+            # Seta a variável de sessão para identificar que é instituição
+            request.session['instituicao_id'] = user.id
+            return redirect('instituicoes:perfil_instituicao')
+        else:
+            messages.error(request, 'Email ou senha incorretos.')
 
     return render(request, 'login_instituicao.html')
 
 
-# Perfil da instituição (requer sessão ativa)
+
 def perfil_instituicao(request):
-    instituicao_id = request.session.get('instituicao_id')
-    if not instituicao_id:
-        messages.warning(request, "Você precisa estar logado para acessar o perfil.")
+    if not request.user.is_authenticated:
         return redirect('instituicoes:login_instituicao')
-
-    instituicao = Instituicao.objects.get(id=instituicao_id)
-    return render(request, 'perfil_instituicao.html', {'instituicao': instituicao})
+    return render(request, 'perfil_instituicao.html', {'instituicao': request.user})
 
 
-# Logout simples
 def logout_instituicao(request):
-    request.session.flush()  # limpa a sessão
-    messages.success(request, "Você saiu da sua conta.")
+    logout(request)
+    if 'instituicao_id' in request.session:
+        del request.session['instituicao_id']
     return redirect('instituicoes:login_instituicao')

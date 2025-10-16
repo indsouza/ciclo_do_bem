@@ -4,9 +4,9 @@ from .models import Estabelecimento
 class EstabelecimentoBackend(BaseBackend):
     def authenticate(self, request, email=None, password=None, **kwargs):
         try:
-            estabelecimento = Estabelecimento.objects.get(email=email)
-            if estabelecimento.check_password(password):
-                return estabelecimento
+            user = Estabelecimento.objects.get(email=email)
+            if user.check_password(password):
+                return user
         except Estabelecimento.DoesNotExist:
             return None
 
@@ -15,4 +15,3 @@ class EstabelecimentoBackend(BaseBackend):
             return Estabelecimento.objects.get(pk=user_id)
         except Estabelecimento.DoesNotExist:
             return None
-

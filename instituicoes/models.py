@@ -49,6 +49,7 @@ class Instituicao(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
+    tipo_usuario = models.CharField(max_length=20, default='instituicao', editable=False)
 
     groups = models.ManyToManyField(Group, related_name="instituicoes_groups", blank=True)
     user_permissions = models.ManyToManyField(Permission, related_name="instituicoes_user_permissions", blank=True)
@@ -60,3 +61,4 @@ class Instituicao(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.nome_fantasia
+

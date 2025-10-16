@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h2>Reservar Oferta: {{ oferta.nome_produto }}</h2>
+
+<p><strong>Estabelecimento:</strong> {{ oferta.estabelecimento.nome_fantasia }}</p>
+<p><strong>Quantidade disponível:</strong> {{ oferta.quantidade }}</p>
+<p><strong>Validade do produto:</strong> {{ oferta.data_validade_produto }}</p>
+<p><strong>Expira em:</strong> {{ oferta.data_expiracao_oferta }}</p>
+
+<form method="post">
+    {% csrf_token %}
+    <label for="quantidade">Quantidade a reservar:</label>
+    <input type="number" name="quantidade" id="quantidade" min="1" max="{{ oferta.quantidade }}" required>
+    <button type="submit" class="btn btn-success">Reservar</button>
+</form>
+
+<a href="{% url 'ofertas:ofertas_disponiveis' %}">Voltar para ofertas</a>
+{% endblock %}

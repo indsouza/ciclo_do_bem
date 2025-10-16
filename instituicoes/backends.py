@@ -4,10 +4,9 @@ from .models import Instituicao
 class InstituicaoBackend(BaseBackend):
     def authenticate(self, request, email=None, password=None, **kwargs):
         try:
-            instituicao = Instituicao.objects.get(email=email)
-            # Para Instituicao, a senha não é hashed, então comparamos diretamente
-            if instituicao.check_password(password):
-                return instituicao
+            user = Instituicao.objects.get(email=email)
+            if user.check_password(password):
+                return user
         except Instituicao.DoesNotExist:
             return None
 
@@ -16,4 +15,3 @@ class InstituicaoBackend(BaseBackend):
             return Instituicao.objects.get(pk=user_id)
         except Instituicao.DoesNotExist:
             return None
-

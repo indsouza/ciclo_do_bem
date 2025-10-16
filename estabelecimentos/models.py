@@ -53,6 +53,7 @@ class Estabelecimento(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
+    tipo_usuario = models.CharField(max_length=20, default='estabelecimento', editable=False)
 
     # Evita conflito de reverse accessor
     groups = models.ManyToManyField(Group, related_name="estabelecimentos_groups", blank=True)
@@ -65,3 +66,4 @@ class Estabelecimento(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.nome_fantasia
+
