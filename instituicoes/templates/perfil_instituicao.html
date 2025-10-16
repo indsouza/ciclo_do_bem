@@ -1,4 +1,4 @@
-{% extends 'base.html' %} 
+{% extends 'base.html' %}  
 {% load static %}
 {% block content %}
 <div class="container mt-5">
@@ -49,19 +49,6 @@
       </div>
     </div>
     {% endif %}
-
-    <!-- Bloco 4: Informações Adicionais -->
-    <div class="col-12">
-      <div class="card p-4 shadow-sm rounded-3 bg-light">
-        <h5 class="fw-bold mb-3"><i class="bi bi-journal-text me-2"></i>Informações Adicionais</h5>
-        <div class="row">
-          <div class="col-md-3"><p><strong>Tipo:</strong> {{ instituicao.tipo_estabelecimento }}</p></div>
-          <div class="col-md-3"><p><strong>Manipulação:</strong> {{ instituicao.tipo_manipulacao }}</p></div>
-          <div class="col-md-3"><p><strong>Nº Funcionários:</strong> {{ instituicao.num_funcionarios }}</p></div>
-          <div class="col-md-3"><p><strong>Licença Sanitária:</strong> {{ instituicao.num_licenca_sanitaria }}</p></div>
-        </div>
-      </div>
-    </div>
 
   </div>
 
