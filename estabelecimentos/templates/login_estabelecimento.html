@@ -7,7 +7,8 @@
     <!-- Cabeçalho -->
     <div class="text-center mb-4">
       <img src="{% static 'img/logo_ciclo.png' %}" alt="Logo Ciclo do Bem" width="90" class="mb-3">
-      <h3 class="fw-bold text-primary mb-1">Login do Estabelecimento</h3>
+      <!-- Título com cor marrom da navbar -->
+      <h3 class="fw-bold" style="color: #674525;">Login do Estabelecimento</h3>
       <p class="text-muted">Acesse sua conta para continuar</p>
     </div>
 
@@ -36,7 +37,8 @@
         <input type="password" id="senha" name="senha" class="form-control" placeholder="Digite sua senha" required>
       </div>
 
-      <button type="submit" class="btn btn-primary w-100 fw-bold py-2">
+      <!-- Botão de login com cor marrom -->
+      <button type="submit" class="btn btn-login w-100 fw-bold py-2">
         <i class="bi bi-box-arrow-in-right me-2"></i> Entrar
       </button>
     </form>
@@ -60,12 +62,11 @@
     margin-bottom: 6px;
   }
 
-  /* Ícones mais baixos dentro das caixas de input */
   .position-relative i.bi {
     position: absolute;
     left: 14px;
     top: 50%;
-    transform: translateY(15%); /* <-- abaixei os ícones */
+    transform: translateY(15%);
     color: #6c757d;
     pointer-events: none;
     font-size: 0.95rem;
@@ -81,23 +82,25 @@
   }
 
   input.form-control:focus {
-    border-color: #0d6efd !important;
-    box-shadow: 0 0 8px rgba(13,110,253,0.18) !important;
+    border-color: #674525 !important;
+    box-shadow: 0 0 8px rgba(103,69,37,0.18) !important;
   }
 
-  .btn-primary {
-    background-color: #0d6efd !important;
+  /* Botão marrom */
+  .btn-login {
+    background-color: #674525 !important;
     border: none !important;
     border-radius: 10px !important;
     transition: transform 0.12s ease, background-color 0.12s ease;
+    color: #fff;
   }
 
-  .btn-primary:hover {
+  .btn-login:hover {
     transform: translateY(-2px);
-    background-color: #0b5ed7 !important;
+    background-color: #52361f !important;
   }
 
-  .btn-primary i.bi {
+  .btn-login i.bi {
     vertical-align: middle;
   }
 </style>
